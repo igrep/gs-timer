@@ -16,18 +16,28 @@ var currentTimeSheetEntry = {
   "column": null,
   "measuring": false,
   "$el": $("#toggleTimerButton"),
-  "prepare": function() {
+  "prepare": function(){
     var this_ = this;
     this_.$el.click(function(){ this_.toggleTimer() }); 
   },
   "toggleTimer": function(){
-    if(this.measuring){
-      this.$el.val("Start");
-      this.measuring = false;
+    var this_ = this;
+    if(this_.measuring){
+      this_.$el.val("Start");
+      this_.measuring = false;
     } else {
-      this.$el.val("Stop");
-      this.measuring = true;
+      google.script.run.withSuccessHandler(
+        function(position) { this_.rememberPosition(position) }
+      ).beginTimeSheetEntry();
+      this_.$el.val("Stop");
+      this_.measuring = true;
     }
+  },
+  "rememberPosition": function(position){
+    this.row = position[0];
+    this.column = position[1];
+    console.log("row: " + this.row);
+    console.log("column: " + this.column);
   }
 }
 currentTimeSheetEntry.prepare();
