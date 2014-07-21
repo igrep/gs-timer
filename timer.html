@@ -12,8 +12,11 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
 var currentTimeSheetEntry = {
-  "row": null,
-  "column": null,
+  "position": {
+    "sheet": null,
+    "row": null,
+    "column": null
+  },
   "measuring": false,
   "$el": $("#toggleTimerButton"),
   "prepare": function(){
@@ -23,9 +26,9 @@ var currentTimeSheetEntry = {
   "toggleTimer": function(){
     var this_ = this;
     if(this_.measuring){
+      google.script.run.endTimeSheetEntry(this_.position);
       this_.$el.val("Start");
       this_.measuring = false;
-      google.script.run.endTimeSheetEntry(this_.row, this_.column);
     } else {
       google.script.run.withSuccessHandler(
         function(position) { this_.rememberPosition(position) }
@@ -35,8 +38,7 @@ var currentTimeSheetEntry = {
     }
   },
   "rememberPosition": function(position){
-    this.row = position[0];
-    this.column = position[1];
+    this.position = position;
   }
 }
 currentTimeSheetEntry.prepare();
