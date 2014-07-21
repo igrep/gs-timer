@@ -25,6 +25,7 @@ var currentTimeSheetEntry = {
     if(this_.measuring){
       this_.$el.val("Start");
       this_.measuring = false;
+      google.script.run.endTimeSheetEntry(this_.row, this_.column);
     } else {
       google.script.run.withSuccessHandler(
         function(position) { this_.rememberPosition(position) }
@@ -36,8 +37,6 @@ var currentTimeSheetEntry = {
   "rememberPosition": function(position){
     this.row = position[0];
     this.column = position[1];
-    console.log("row: " + this.row);
-    console.log("column: " + this.column);
   }
 }
 currentTimeSheetEntry.prepare();
