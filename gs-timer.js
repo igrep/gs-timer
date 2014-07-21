@@ -8,9 +8,12 @@ function launchTimer_() {
   ui.showSidebar(HtmlService.createHtmlOutputFromFile('timer.html'));
 }
 
+var TIME_FORMAT = "HH:mm:ss";
+
 function beginTimeSheetEntry() {
   var cell = SpreadsheetApp.getActiveSheet().getActiveCell();
   cell.setValue(new Date());
+  cell.setNumberFormat(TIME_FORMAT);
   return [cell.getRow(), cell.getColumn()];
 }
 
@@ -23,7 +26,9 @@ function endTimeSheetEntry(row, column) {
     var otherCell = sheet.getRange(row, (column + 3));
 
     endTimeCell.setValue(new Date());
+    endTimeCell.setNumberFormat(TIME_FORMAT);
     durationCell.setFormula(endTimeCell.getA1Notation() + '-' + beginTimeCell.getA1Notation());
+    durationCell.setNumberFormat(TIME_FORMAT);
     otherCell.activate();
   }
 }
