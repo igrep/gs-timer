@@ -11,15 +11,19 @@ function launchTimer_() {
 var TIME_FORMAT = "HH:mm:ss";
 
 function beginTimeSheetEntry() {
+  var sheet = SpreadsheetApp.getActiveSheet();
   var cell = SpreadsheetApp.getActiveSheet().getActiveCell();
   cell.setValue(new Date());
   cell.setNumberFormat(TIME_FORMAT);
-  return [cell.getRow(), cell.getColumn()];
+  return { "sheet": sheet.getName(), "row": cell.getRow(), "column": cell.getColumn() };
 }
 
-function endTimeSheetEntry(row, column) {
-  if(row && column){
-    var sheet = SpreadsheetApp.getActiveSheet()
+function endTimeSheetEntry(position) {
+  if(position.sheet && position.row && position.column){
+    var sheet = SpreadsheetApp.getActive().getSheetByName(position.sheet);
+    var row = position.row;
+    var column = position.column;
+
     var beginTimeCell = sheet.getRange(row, column);
     var endTimeCell = sheet.getRange(row, (column + 1));
     var durationCell = sheet.getRange(row, (column + 2));
