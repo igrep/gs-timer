@@ -7,3 +7,9 @@ function launchTimer_() {
   var ui = SpreadsheetApp.getUi();
   ui.showSidebar(HtmlService.createHtmlOutputFromFile('timer.html'));
 }
+
+function beginTimeSheetEntry() {
+  var cell = SpreadsheetApp.getActiveSheet().getActiveCell();
+  cell.setValue(new Date());
+  return [cell.getRow(), cell.getColumn()];
+}
