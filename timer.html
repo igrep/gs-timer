@@ -2,38 +2,85 @@
 #container {
   text-align: center;
 }
+#toggleTimerButton {
+  font-size: 200%;
+}
+#timeElapsed {
+  font-size: 200%;
+  width: 5em;
+  text-align: right;
+  background-color: #fff;
+  border-color: #fff;
+}
 </style>
 <div id="container">
   <h1>Timer</h1>
   <form>
-    <input type="button" value="Start" id="toggleTimerButton" />
+    <input type="button" value="Start" id="toggleTimerButton" /><br />
+    <input type="text" value="0:00:00" id="timeElapsed" disabled/>
   </form>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
 var currentTimeSheetEntry = {
   "position": null,
-  "measuring": false,
   "$el": $("#toggleTimerButton"),
+  "counter": {
+    "_intervalId": null,
+    "count": 0,
+    "$el": $("#timeElapsed"),
+    "isCounting": function(){
+      console.log(this._intervalId);
+      return !!this._intervalId;
+    },
+    "start": function(){
+      var this_ = this;
+      this_._intervalId = setInterval(function(){ this_.up() }, 1000);
+    },
+    "stop": function(){
+      clearInterval(this._intervalId);
+      this._intervalId = null;
+      this.count = 0;
+      this.show();
+    },
+    "up": function(){
+      ++this.count;
+      this.show();
+    },
+    "show": function(){
+      var count   = this.count;
+      var hour    = Math.floor(count / 3600);
+      var min     = this.to2digits(Math.floor(count / 60));
+      var seconds = this.to2digits(count % 60);
+      this.$el.val(hour + ":" + min + ":" + seconds);
+    },
+    "to2digits": function(n){
+      if(n < 10){
+        return '0' + n;
+      } else {
+        return n;
+      }
+    }
+  },
   "prepare": function(){
     var this_ = this;
     this_.$el.click(function(){ this_.toggleTimer() }); 
   },
   "toggleTimer": function(){
     var this_ = this;
-    if(this_.measuring){
+    if(this_.counter.isCounting()){
       if(this_.position){
         google.script.run.endTimeSheetEntry(this_.position);
         this_.$el.val("Start");
         this_.position = null;
-        this_.measuring = false;
+        this_.counter.stop();
       }
     } else {
       google.script.run.withSuccessHandler(
         function(position) { this_.rememberPosition(position) }
       ).beginTimeSheetEntry();
       this_.$el.val("Stop");
-      this_.measuring = true;
+      this_.counter.start();
     }
   },
   "rememberPosition": function(position){
