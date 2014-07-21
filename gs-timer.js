@@ -5,5 +5,5 @@ function onOpen() {
 
 function launchTimer_() {
   var ui = SpreadsheetApp.getUi();
-  ui.alert('Launching Timer!');
+  ui.showSidebar(HtmlService.createHtmlOutputFromFile('timer.html'));
 }
