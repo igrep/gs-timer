@@ -5,7 +5,21 @@
 </style>
 <div id="container">
   <h1>Timer</h1>
-  <div>
-    Here'll be the timer!
-  </div>
+  <form>
+    <input type="button" value="Start" id="toggleTimerButton" />
+  </form>
 </div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+var measuring = false;
+$("#toggleTimerButton").click(function(event){
+  var $element = $(event.target);
+  if(measuring){
+    $element.val("Start");
+    measuring = false;
+  } else {
+    $element.val("Stop");
+    measuring = true;
+  }
+})
+</script>
