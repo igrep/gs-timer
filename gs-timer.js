@@ -19,20 +19,18 @@ function beginTimeSheetEntry() {
 }
 
 function endTimeSheetEntry(position) {
-  if(position.sheet && position.row && position.column){
-    var sheet = SpreadsheetApp.getActive().getSheetByName(position.sheet);
-    var row = position.row;
-    var column = position.column;
+  var sheet = SpreadsheetApp.getActive().getSheetByName(position.sheet);
+  var row = position.row;
+  var column = position.column;
 
-    var beginTimeCell = sheet.getRange(row, column);
-    var endTimeCell = sheet.getRange(row, (column + 1));
-    var durationCell = sheet.getRange(row, (column + 2));
-    var otherCell = sheet.getRange(row, (column + 3));
+  var beginTimeCell = sheet.getRange(row, column);
+  var endTimeCell = sheet.getRange(row, (column + 1));
+  var durationCell = sheet.getRange(row, (column + 2));
+  var otherCell = sheet.getRange(row, (column + 3));
 
-    endTimeCell.setValue(new Date());
-    endTimeCell.setNumberFormat(TIME_FORMAT);
-    durationCell.setFormula(endTimeCell.getA1Notation() + '-' + beginTimeCell.getA1Notation());
-    durationCell.setNumberFormat(TIME_FORMAT);
-    otherCell.activate();
-  }
+  endTimeCell.setValue(new Date());
+  endTimeCell.setNumberFormat(TIME_FORMAT);
+  durationCell.setFormula(endTimeCell.getA1Notation() + '-' + beginTimeCell.getA1Notation());
+  durationCell.setNumberFormat(TIME_FORMAT);
+  otherCell.activate();
 }
