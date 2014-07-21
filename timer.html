@@ -76,11 +76,14 @@ var currentTimeSheetEntry = {
         this_.counter.stop();
       }
     } else {
-      google.script.run.withSuccessHandler(
-        function(position) { this_.rememberPosition(position) }
-      ).beginTimeSheetEntry();
-      this_.$el.val("Stop");
-      this_.counter.start();
+      google.script.run.withSuccessHandler(function(position) {
+        this_.rememberPosition(position);
+        this_.$el.val("Stop");
+        this_.counter.start();
+      }).withFailureHandler(function(e){
+        console.log(e);
+        // do nothing. just ignore.
+      }).beginTimeSheetEntry();
     }
   },
   "rememberPosition": function(position){
