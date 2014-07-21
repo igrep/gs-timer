@@ -11,15 +11,24 @@
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
-var measuring = false;
-$("#toggleTimerButton").click(function(event){
-  var $element = $(event.target);
-  if(measuring){
-    $element.val("Start");
-    measuring = false;
-  } else {
-    $element.val("Stop");
-    measuring = true;
+var currentTimeSheetEntry = {
+  "row": null,
+  "column": null,
+  "measuring": false,
+  "$el": $("#toggleTimerButton"),
+  "prepare": function() {
+    var this_ = this;
+    this_.$el.click(function(){ this_.toggleTimer() }); 
+  },
+  "toggleTimer": function(){
+    if(this.measuring){
+      this.$el.val("Start");
+      this.measuring = false;
+    } else {
+      this.$el.val("Stop");
+      this.measuring = true;
+    }
   }
-})
+}
+currentTimeSheetEntry.prepare();
 </script>
