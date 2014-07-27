@@ -50,7 +50,7 @@ var currentTimeSheetEntry = {
     "show": function(){
       var count   = this.count;
       var hour    = Math.floor(count / 3600);
-      var min     = this.to2digits(Math.floor(count / 60));
+      var min     = this.to2digits(Math.floor((count % 3600) / 60));
       var seconds = this.to2digits(count % 60);
       this.$el.val(hour + ":" + min + ":" + seconds);
     },
