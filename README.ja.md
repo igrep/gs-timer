@@ -30,5 +30,6 @@ Google Spreadsheetsに、シンプルなタイマー機能を追加します。
     ![Click Stop](./screenshots/timer-stop.png)
 6. 開始時間を記録したセルの右に、タイマーを停止した時刻と、かかった時間が記録されます。
     - **NOTE**: タイマーに表示されていた時間と、セルに記録された時間に、**大幅な差**がある場合があります。これは現在解決方法を検討中です。あしからず。
-    ![Enter other columns](./screenshots/enter-other-columns.png)
+    ![Timer stopped](./screenshots/timer-stopped.png)
 7. 後は、時間を記録したセルの右の列などに、お好みの情報を記録しましょう。
+    ![Enter other columns](./screenshots/enter-other-columns.png)
