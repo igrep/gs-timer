@@ -8,7 +8,7 @@ Google Spreadsheetsに、シンプルなタイマー機能を追加します。
 
 # Usage
 
-1. スクリプトを埋め込んだ、(こちらのスプレッドシート)[https://docs.google.com/a/33i.co.jp/spreadsheets/d/1KLaDfnIJL0xuLPiylvZN2kC31oyAJGBTEjz8l6noFBI/edit#gid=0]を、あなたのGoogle Driveにコピーしてください。
+1. スクリプトを埋め込んだ、[こちらのスプレッドシート](https://docs.google.com/a/33i.co.jp/spreadsheets/d/1KLaDfnIJL0xuLPiylvZN2kC31oyAJGBTEjz8l6noFBI/edit#gid=0)を、あなたのGoogle Driveにコピーしてください。
     1. 「File」 => 「Make a copy」 の順番にメニュー（日本語の場合「ファイル」 => 「コピーを作成」）をクリックしてください。
     2. 作成するコピーの名前を入力する画面が表示されます。お好きな名前を入力してください。
     3. この時点で、すでに時間を記録している別のスプレッドシートがある場合、その内容を、コピーしたシートにコピーしてください。
