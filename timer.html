@@ -27,31 +27,44 @@ var currentTimeSheetEntry = {
   "$el": $("#toggleTimerButton"),
   "counter": {
     "_intervalId": null,
-    "count": 0,
+    "startedAt": null,
     "$el": $("#timeElapsed"),
     "isCounting": function(){
       return !!this._intervalId;
     },
     "start": function(){
       var this_ = this;
-      this_._intervalId = setInterval(function(){ this_.up() }, 1000);
+      this_.startedAt = (new Date()).getTime();
+      this_._intervalId = setInterval(
+        function(){
+          this_.calculateElapsedTime();
+          this_.show();
+        },
+        1000
+      );
     },
     "stop": function(){
       clearInterval(this._intervalId);
       this._intervalId = null;
-      this.count = 0;
-      this.show();
-    },
-    "up": function(){
-      ++this.count;
       this.show();
     },
     "show": function(){
-      var count   = this.count;
-      var hour    = Math.floor(count / 3600);
-      var min     = this.to2digits(Math.floor((count % 3600) / 60));
-      var seconds = this.to2digits(count % 60);
-      this.$el.val(hour + ":" + min + ":" + seconds);
+      this.$el.val(
+          this.elapsedHours + ":"
+        + this.to2digits(this.elapsedMinutes) + ":"
+        + this.to2digits(this.elapsedSeconds)
+      );
+    },
+    "calculateElapsedTime": function(){
+      var elapsedMilliseconds = (new Date()).getTime() - this.startedAt;
+
+      var anHourByMilliseconds  = 3600000;
+      var aMinuteByMilliseconds =   60000;
+      var aSecondByMilliseconds =    1000;
+
+      this.elapsedHours   = Math.floor( elapsedMilliseconds / anHourByMilliseconds);
+      this.elapsedMinutes = Math.floor((elapsedMilliseconds % anHourByMilliseconds) / aMinuteByMilliseconds);
+      this.elapsedSeconds = Math.floor((elapsedMilliseconds % aMinuteByMilliseconds) / aSecondByMilliseconds);
     },
     "to2digits": function(n){
       if(n < 10){
